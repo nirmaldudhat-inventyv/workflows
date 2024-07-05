@@ -1,0 +1,25 @@
+name: Sample App Master
+#
+on: 
+  workflow_dispatch:
+  # push:
+  #   branches: [ "main" ]
+  #   paths-ignore:
+  #     - '.github/workflows/**'
+
+env:
+  IMAGE_NAME: ${{ github.event.repository.organization }}/${{ github.event.repository.name }} 
+  DOCKERFILE_PATH: ./Dockerfile
+  REGISTRY: ghcr.io
+
+jobs:
+  build:
+    if: contains(vars.VAR_AUTH,github.actor)
+    runs-on: ubuntu-latest
+    steps:
+      - name: variables print
+        run: |
+          echo  "Registry: ${{ env.REGISTRY }} \n"
+          echo "Username: ${{ github.actor }} \n"
+          echo "Organization: ${{ github.event.repository.organization }} \n"
+          echo "repository: ${{ github.event.repository.name }} \n"
